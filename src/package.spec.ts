@@ -4,6 +4,7 @@ import {
   getPackagePaths,
   getPackagePathsByFolder,
   getPackageRoots,
+  parsePackageFiles,
 } from './package'
 
 describe('package', () => {
@@ -105,6 +106,46 @@ describe('package', () => {
         'wayne-manor': 'modules/wayne-manor',
         'wayne-tower': 'libraries/wayne-tower',
       })
+    })
+  })
+
+  describe('parsePackageFiles', () => {
+    it('should parse files as JSON and return contents ', async () => {
+      fs = Volume.fromJSON({
+        'lerna.json': JSON.stringify({
+          packages: ['modules/*', 'libraries/*', 'empty/*'],
+        }),
+        'modules/wayne-manor/package.json': JSON.stringify({
+          name: '@exodus/wayne-manor',
+        }),
+        'libraries/wayne-tower/package.json': JSON.stringify({
+          name: '@exodus/wayne-tower',
+        }),
+        'libraries/without-coverage/package.json': JSON.stringify({
+          name: '@exodus/without-coverage',
+        }),
+        'modules/wayne-manor/coverage/coverage-summary.json': JSON.stringify({
+          lines: { total: 42 },
+        }),
+        'libraries/wayne-tower/coverage/coverage-summary.json': JSON.stringify({
+          lines: { total: 73 },
+        }),
+      })
+
+      await expect(
+        parsePackageFiles<{ lines: { total: number } }>('coverage/coverage-summary.json', {
+          filesystem: fs as never,
+        })
+      ).resolves.toEqual([
+        {
+          path: 'modules/wayne-manor/coverage/coverage-summary.json',
+          content: { lines: { total: 42 } },
+        },
+        {
+          path: 'libraries/wayne-tower/coverage/coverage-summary.json',
+          content: { lines: { total: 73 } },
+        },
+      ])
     })
   })
 })

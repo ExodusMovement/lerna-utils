@@ -62,7 +62,6 @@ export async function parsePackageFiles<T>(
   return Promise.all(
     packagePaths.map(async (packagePath) => {
       const filePath = path.join(packagePath, relativePath)
-
       const content = await readJson<T>(filePath, { filesystem })
 
       return { path: filePath, content }
