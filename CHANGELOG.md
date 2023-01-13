@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/ExodusMovement/lerna-utils/compare/v1.1.1...v1.2.0) (2023-01-13)
+
+
+### Features
+
+* make filesystem entirely optional ([e94e1c4](https://github.com/ExodusMovement/lerna-utils/commit/e94e1c4f7d985b9ee03de10cc9ce312543357b1c))
+
 ## [1.1.1](https://github.com/ExodusMovement/lerna-utils/compare/v1.1.0...v1.1.1) (2023-01-13)
 
 
