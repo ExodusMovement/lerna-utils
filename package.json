@@ -1,6 +1,7 @@
 {
   "name": "@exodus/lerna-utils",
   "version": "1.0.0",
+  "author": "ExodusMovement",
   "repository": {
     "type": "git",
     "url": "https://github.com/ExodusMovement/lerna-utils.git"
@@ -20,9 +21,8 @@
   },
   "main": "lib/index.js",
   "license": "UNLICENSED",
-  "description": "npx tool to migrate a package from one GH repository to another",
+  "description": "Utility methods for building package logic in lerna monorepos",
   "scripts": {
-    "migrate": "ts-node src/index.ts",
     "test": "jest src",
     "lint": "eslint .",
     "lint:fix": "yarn lint --fix",
@@ -32,9 +32,6 @@
     "watch": "tsc --watch -p tsconfig.build.json",
     "prepublishOnly": "yarn build",
     "semantic-release": "semantic-release"
-  },
-  "dependencies": {
-    "commander": "^9.4.0"
   },
   "devDependencies": {
     "@exodus/eslint-config": "^3.0.0",
