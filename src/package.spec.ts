@@ -1,5 +1,10 @@
 import { Volume } from 'memfs/lib/volume'
-import { getPackageNameByPath, getPackagePaths, getPackageRoots } from './package'
+import {
+  getPackageNameByPath,
+  getPackagePaths,
+  getPackagePathsByFolder,
+  getPackageRoots,
+} from './package'
 
 describe('package', () => {
   let fs: Volume
@@ -79,6 +84,27 @@ describe('package', () => {
         'modules/wayne-manor',
         'libraries/wayne-tower',
       ])
+    })
+  })
+
+  describe('getPackagePathsByFolder', () => {
+    it('should return package paths keyed by package folder', async () => {
+      setup()
+      await expect(getPackagePathsByFolder({ filesystem: fs as never })).resolves.toEqual({
+        'wayne-manor': 'modules/wayne-manor',
+        'wayne-tower': 'libraries/wayne-tower',
+      })
+    })
+
+    it('should not return paths of folder without package.json', async () => {
+      setup({
+        'libraries/leftover-from-exploration-on-branch/lib/index.js': 'nothing here',
+      })
+
+      await expect(getPackagePathsByFolder({ filesystem: fs as never })).resolves.toEqual({
+        'wayne-manor': 'modules/wayne-manor',
+        'wayne-tower': 'libraries/wayne-tower',
+      })
     })
   })
 })

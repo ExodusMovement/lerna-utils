@@ -13,4 +13,3 @@ export async function readJson<ReturnType>(
 
   return JSON.parse(buffer.toString())
 }
-

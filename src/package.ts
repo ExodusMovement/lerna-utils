@@ -33,22 +33,13 @@ export async function getPackagePaths({ filesystem = fs }: DefaultParams) {
   )
   return paths.flat()
 }
-
-type GetPackagePathsByFolderParams = {
-  packageRoots: string[]
-} & DefaultParams
-
 export async function getPackagePathsByFolder({
   filesystem = fs,
-}: GetPackagePathsByFolderParams): Promise<{ [folder: string]: string }> {
-  const packageRoots = await getPackageRoots({ filesystem })
-  const folderPaths = await Promise.all(
-    packageRoots.map(async (root) => {
-      const folders = await filesystem.promises.readdir(root)
-      return folders.map((folder) => [folder, path.join(root, folder)])
-    })
+}: DefaultParams): Promise<{ [folder: string]: string }> {
+  const packagePaths = await getPackagePaths({ filesystem })
+  return Object.fromEntries(
+    packagePaths.map((packagePath) => [path.basename(packagePath), packagePath])
   )
-  return Object.fromEntries(folderPaths.flat())
 }
 
 export async function getPackageNameByPath(
