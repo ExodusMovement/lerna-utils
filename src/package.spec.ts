@@ -4,6 +4,7 @@ import {
   getPackagePaths,
   getPackagePathsByFolder,
   getPackageRoots,
+  getPathsByPackageNames,
   parsePackageFiles,
 } from './package'
 
@@ -146,6 +147,21 @@ describe('package', () => {
           content: { lines: { total: 73 } },
         },
       ])
+    })
+  })
+
+  describe('getPathsByPackageNames', () => {
+    it('should return paths keyed by package name', async () => {
+      setup()
+
+      await expect(
+        getPathsByPackageNames({
+          filesystem: fs as never,
+        })
+      ).resolves.toEqual({
+        '@exodus/wayne-manor': 'modules/wayne-manor',
+        '@exodus/wayne-tower': 'libraries/wayne-tower',
+      })
     })
   })
 })

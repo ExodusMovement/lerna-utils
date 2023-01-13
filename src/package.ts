@@ -68,3 +68,11 @@ export async function parsePackageFiles<T>(
     })
   ).then((them) => them.filter((it) => !!it.content) as { path: string; content: T }[])
 }
+
+export async function getPathsByPackageNames({ filesystem = fs }: DefaultParams) {
+  const packageJsons = await parsePackageFiles<PackageJson>('package.json', { filesystem })
+
+  return Object.fromEntries(
+    packageJsons.map(({ path: filePath, content }) => [content.name, path.dirname(filePath)])
+  )
+}
