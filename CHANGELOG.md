@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/ExodusMovement/lerna-utils/compare/v1.1.0...v1.1.1) (2023-01-13)
+
+
+### Bug Fixes
+
+* include declarartion files ([3afe98b](https://github.com/ExodusMovement/lerna-utils/commit/3afe98b7dc02c4a51e95a706f9c5d5a09dce2a68))
+
 # [1.1.0](https://github.com/ExodusMovement/lerna-utils/compare/v1.0.0...v1.1.0) (2023-01-13)
 
 
