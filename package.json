@@ -18,6 +18,7 @@
       "@semantic-release/git"
     ]
   },
+  "main": "lib/index.js",
   "license": "UNLICENSED",
   "description": "npx tool to migrate a package from one GH repository to another",
   "scripts": {
