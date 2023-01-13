@@ -19,7 +19,7 @@ export async function getPackageRoots({ filesystem = fs }: DefaultParams = {}): 
   })
 }
 
-export async function getPackagePaths({ filesystem = fs }: DefaultParams): Promise<string[]> {
+export async function getPackagePaths({ filesystem = fs }: DefaultParams = {}): Promise<string[]> {
   const packageRoots = await getPackageRoots({ filesystem })
   const paths = await Promise.all(
     packageRoots.map(async (root) => {
@@ -33,9 +33,9 @@ export async function getPackagePaths({ filesystem = fs }: DefaultParams): Promi
   )
   return paths.flat()
 }
-export async function getPackagePathsByFolder({
-  filesystem = fs,
-}: DefaultParams): Promise<{ [folder: string]: string }> {
+export async function getPackagePathsByFolder({ filesystem = fs }: DefaultParams = {}): Promise<{
+  [folder: string]: string
+}> {
   const packagePaths = await getPackagePaths({ filesystem })
   return Object.fromEntries(
     packagePaths.map((packagePath) => [path.basename(packagePath), packagePath])
@@ -55,7 +55,7 @@ export async function getPackageNameByPath(
 
 export async function parsePackageFiles<T>(
   relativePath: string,
-  { filesystem = fs }: DefaultParams
+  { filesystem = fs }: DefaultParams = {}
 ): Promise<{ path: string; content: T }[]> {
   const packagePaths = await getPackagePaths({ filesystem })
 
@@ -69,9 +69,9 @@ export async function parsePackageFiles<T>(
   ).then((them) => them.filter((it) => !!it.content) as { path: string; content: T }[])
 }
 
-export async function getPathsByPackageNames({
-  filesystem = fs,
-}: DefaultParams): Promise<{ [packageName: string]: string }> {
+export async function getPathsByPackageNames({ filesystem = fs }: DefaultParams = {}): Promise<{
+  [packageName: string]: string
+}> {
   const packageJsons = await parsePackageFiles<PackageJson>('package.json', { filesystem })
 
   return Object.fromEntries(
