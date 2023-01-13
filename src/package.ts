@@ -8,7 +8,7 @@ type DefaultParams = {
   filesystem?: typeof fs
 }
 
-export async function getPackageRoots({ filesystem = fs }: DefaultParams = {}) {
+export async function getPackageRoots({ filesystem = fs }: DefaultParams = {}): Promise<string[]> {
   const lernaConfig = await readJson<LernaConfig>('lerna.json', { filesystem })
   const packageRoots = lernaConfig?.packages ?? ['packages/*']
 
@@ -19,7 +19,7 @@ export async function getPackageRoots({ filesystem = fs }: DefaultParams = {}) {
   })
 }
 
-export async function getPackagePaths({ filesystem = fs }: DefaultParams) {
+export async function getPackagePaths({ filesystem = fs }: DefaultParams): Promise<string[]> {
   const packageRoots = await getPackageRoots({ filesystem })
   const paths = await Promise.all(
     packageRoots.map(async (root) => {
@@ -45,7 +45,7 @@ export async function getPackagePathsByFolder({
 export async function getPackageNameByPath(
   packagePath: string,
   { filesystem = fs }: DefaultParams = {}
-) {
+): Promise<string | undefined> {
   const packageJson = await readJson<PackageJson>(path.join(packagePath, 'package.json'), {
     filesystem,
   })
@@ -69,7 +69,9 @@ export async function parsePackageFiles<T>(
   ).then((them) => them.filter((it) => !!it.content) as { path: string; content: T }[])
 }
 
-export async function getPathsByPackageNames({ filesystem = fs }: DefaultParams) {
+export async function getPathsByPackageNames({
+  filesystem = fs,
+}: DefaultParams): Promise<{ [packageName: string]: string }> {
   const packageJsons = await parsePackageFiles<PackageJson>('package.json', { filesystem })
 
   return Object.fromEntries(
