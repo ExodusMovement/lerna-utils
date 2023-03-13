@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/ExodusMovement/lerna-utils/compare/v1.2.0...v1.3.0) (2023-03-13)
+
+
+### Features
+
+* add util to normalize user supplied package names ([#2](https://github.com/ExodusMovement/lerna-utils/issues/2)) ([ac9c34f](https://github.com/ExodusMovement/lerna-utils/commit/ac9c34fbcb0f9cb4024360299162022c4a2aabcf))
+
 # [1.2.0](https://github.com/ExodusMovement/lerna-utils/compare/v1.1.1...v1.2.0) (2023-01-13)
 
 
