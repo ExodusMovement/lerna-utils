@@ -7,29 +7,60 @@ import {
   getPathsByPackageNames,
   parsePackageFiles,
 } from './package'
+import { createFsFromJSON } from './utils/testing'
 
 describe('package', () => {
   let fs: Volume
 
   describe('getPackageRoots', () => {
     it('should return normalized package roots', async () => {
-      fs = Volume.fromJSON({
+      fs = createFsFromJSON({
         'lerna.json': JSON.stringify({
-          packages: ['libraries/*', 'modules/*', 'single/package'],
+          packages: ['libraries', 'modules/*', 'single/package', 'nested/**/package'],
         }),
+        'libraries/wayne-manor/package.json': 'some content',
+        'modules/wayne-tower/package.json': 'some content',
+        'single/package/package.json': 'some content',
+        'nested/bruce-wayne/package/package.json': 'some content',
+        'nested/batman/package/package.json': 'some content',
       })
 
       await expect(getPackageRoots({ filesystem: fs as never })).resolves.toEqual([
         'libraries',
         'modules',
         'single/package',
+        'nested/bruce-wayne/package',
+        'nested/batman/package',
+      ])
+    })
+
+    it('should return normalized paths for grouped package roots', async () => {
+      fs = createFsFromJSON({
+        'lerna.json': JSON.stringify({
+          packages: [
+            'libraries',
+            'modules/exchange/{exchange,exchange-monitors}',
+            'single/package',
+          ],
+        }),
+        'libraries/wayne-manor/package.json': 'some content',
+        'modules/exchange/exchange/package.json': 'some content',
+        'modules/exchange/exchange-monitors/package.json': 'some content',
+        'single/package/package.json': 'some content',
+      })
+
+      await expect(getPackageRoots({ filesystem: fs as never })).resolves.toEqual([
+        'libraries',
+        'single/package',
+        'modules/exchange/exchange',
+        'modules/exchange/exchange-monitors',
       ])
     })
   })
 
   describe('getPackageNameByPath', () => {
     beforeEach(() => {
-      fs = Volume.fromJSON({
+      fs = createFsFromJSON({
         'lerna.json': JSON.stringify({
           packages: ['packages/*'],
         }),
@@ -53,7 +84,7 @@ describe('package', () => {
   })
 
   const setup = (additionalContents: { [path: string]: string } = {}) => {
-    fs = Volume.fromJSON({
+    fs = createFsFromJSON({
       'lerna.json': JSON.stringify({
         packages: ['modules/*', 'libraries/*', 'empty/*'],
       }),
@@ -112,7 +143,7 @@ describe('package', () => {
 
   describe('parsePackageFiles', () => {
     it('should parse files as JSON and return contents ', async () => {
-      fs = Volume.fromJSON({
+      fs = createFsFromJSON({
         'lerna.json': JSON.stringify({
           packages: ['modules/*', 'libraries/*', 'empty/*'],
         }),

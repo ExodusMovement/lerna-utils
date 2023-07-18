@@ -3,6 +3,7 @@ import * as fs from 'fs'
 import { readJson } from './utils/fs'
 import { LernaConfig, PackageJson } from './utils/types'
 import { filterAsync } from './utils/arrays'
+import { glob } from 'glob'
 
 type DefaultParams = {
   filesystem?: typeof fs
@@ -12,11 +13,14 @@ export async function getPackageRoots({ filesystem = fs }: DefaultParams = {}): 
   const lernaConfig = await readJson<LernaConfig>('lerna.json', { filesystem })
   const packageRoots = lernaConfig?.packages ?? ['packages/*']
 
-  return packageRoots.map((root: string) => {
-    if (root.endsWith('*')) return path.dirname(root)
+  return glob(
+    packageRoots.map((root: string) => {
+      if (root.endsWith('*')) return path.dirname(root)
 
-    return root
-  })
+      return root
+    }),
+    { fs: filesystem }
+  )
 }
 
 export async function getPackagePaths({ filesystem = fs }: DefaultParams = {}): Promise<string[]> {
