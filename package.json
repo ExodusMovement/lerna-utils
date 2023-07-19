@@ -58,5 +58,8 @@
     "tsconfig.json",
     "README.md"
   ],
-  "packageManager": "yarn@3.2.3"
+  "packageManager": "yarn@3.2.3",
+  "dependencies": {
+    "glob": "^10.3.3"
+  }
 }
