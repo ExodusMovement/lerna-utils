@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/ExodusMovement/lerna-utils/compare/v1.3.0...v1.4.0) (2023-07-19)
+
+
+### Features
+
+* add globbing support for package roots ([#3](https://github.com/ExodusMovement/lerna-utils/issues/3)) ([92155c1](https://github.com/ExodusMovement/lerna-utils/commit/92155c11c8d28ed4714b14e4b0b1bee1ff9d80bb))
+
 # [1.3.0](https://github.com/ExodusMovement/lerna-utils/compare/v1.2.0...v1.3.0) (2023-03-13)
 
 
