@@ -83,10 +83,13 @@ describe('package', () => {
     })
   })
 
-  const setup = (additionalContents: { [path: string]: string } = {}) => {
+  const setup = (
+    additionalContents: { [path: string]: string } = {},
+    additionalPackages: string[] = []
+  ) => {
     fs = createFsFromJSON({
       'lerna.json': JSON.stringify({
-        packages: ['modules/*', 'libraries/*', 'empty/*'],
+        packages: ['modules/*', 'libraries/*', 'empty/*', ...additionalPackages],
       }),
       'modules/wayne-manor/package.json': JSON.stringify({
         name: '@exodus/wayne-manor',
@@ -116,6 +119,44 @@ describe('package', () => {
       await expect(getPackagePaths({ filesystem: fs as never })).resolves.toEqual([
         'modules/wayne-manor',
         'libraries/wayne-tower',
+      ])
+    })
+
+    it('should return path for a single package root', async () => {
+      setup(
+        {
+          'single/package/package.json': JSON.stringify({
+            name: '@exodus/package',
+          }),
+        },
+        ['single/package', 'groups/{bruce,batman}']
+      )
+
+      await expect(getPackagePaths({ filesystem: fs as never })).resolves.toEqual([
+        'modules/wayne-manor',
+        'libraries/wayne-tower',
+        'single/package',
+      ])
+    })
+
+    it('should return paths for grouped packages', async () => {
+      setup(
+        {
+          'groups/bruce/package.json': JSON.stringify({
+            name: '@exodus/bruce',
+          }),
+          'groups/batman/package.json': JSON.stringify({
+            name: '@exodus/batman',
+          }),
+        },
+        ['groups/{bruce,batman}']
+      )
+
+      await expect(getPackagePaths({ filesystem: fs as never })).resolves.toEqual([
+        'modules/wayne-manor',
+        'libraries/wayne-tower',
+        'groups/bruce',
+        'groups/batman',
       ])
     })
   })

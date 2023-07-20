@@ -27,7 +27,9 @@ export async function getPackagePaths({ filesystem = fs }: DefaultParams = {}): 
   const packageRoots = await getPackageRoots({ filesystem })
   const paths = await Promise.all(
     packageRoots.map(async (root) => {
-      const folders = await filesystem.promises.readdir(root).catch(() => [])
+      const folders = await filesystem.promises.readdir(root).catch(() => [] as string[])
+      if (folders.includes('package.json')) return root
+
       const filtered = await filterAsync(folders, (folder) =>
         filesystem.promises.stat(path.join(root, folder, 'package.json')).catch(() => false)
       )
