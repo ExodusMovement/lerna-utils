@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/ExodusMovement/lerna-utils/compare/v1.4.0...v1.4.1) (2023-07-20)
+
+
+### Bug Fixes
+
+* missing package path when specifying root ([#6](https://github.com/ExodusMovement/lerna-utils/issues/6)) ([c1a6739](https://github.com/ExodusMovement/lerna-utils/commit/c1a6739e2e8a6a1e356beb48351c766508c35cf4))
+
 # [1.4.0](https://github.com/ExodusMovement/lerna-utils/compare/v1.3.0...v1.4.0) (2023-07-19)
 
 
