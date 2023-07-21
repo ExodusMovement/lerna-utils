@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/ExodusMovement/lerna-utils/compare/v1.4.1...v1.4.2) (2023-07-21)
+
+
+### Bug Fixes
+
+* include custom types in lib ([#7](https://github.com/ExodusMovement/lerna-utils/issues/7)) ([39f8169](https://github.com/ExodusMovement/lerna-utils/commit/39f816922f3ad8b25985c4f411fcaea9c8089b62))
+
 ## [1.4.1](https://github.com/ExodusMovement/lerna-utils/compare/v1.4.0...v1.4.1) (2023-07-20)
 
 
