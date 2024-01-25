@@ -6,6 +6,7 @@ export type LernaConfig = {
 
 export type PackageJson = {
   name: string
+  workspaces: string[] | { packages: string[] }
 }
 
 export type Filesystem = typeof fs

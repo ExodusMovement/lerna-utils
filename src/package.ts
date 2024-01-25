@@ -11,7 +11,14 @@ type DefaultParams = {
 
 export async function getPackageRoots({ filesystem = fs }: DefaultParams = {}): Promise<string[]> {
   const lernaConfig = await readJson<LernaConfig>('lerna.json', { filesystem })
-  const packageRoots = lernaConfig?.packages ?? ['packages/*']
+  let packageRoots = lernaConfig?.packages
+
+  if (!packageRoots) {
+    const packageJson = await readJson<PackageJson>('package.json', { filesystem })
+    packageRoots = (Array.isArray(packageJson?.workspaces)
+      ? packageJson?.workspaces
+      : packageJson?.workspaces.packages) ?? ['packages/*']
+  }
 
   return glob(
     packageRoots.map((root: string) => {

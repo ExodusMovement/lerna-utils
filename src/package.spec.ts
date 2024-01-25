@@ -159,6 +159,46 @@ describe('package', () => {
         'groups/batman',
       ])
     })
+
+    it('should return paths for packages defined as npm workspaces', async () => {
+      fs = createFsFromJSON({
+        'lerna.json': JSON.stringify({}),
+        'package.json': JSON.stringify({
+          workspaces: ['libraries/*', 'modules/*', 'wayne-foundation/batman'],
+        }),
+        'libraries/wayne-manor/package.json': 'some content',
+        'modules/wayne-tower/package.json': 'some content',
+        'single/package/package.json': 'some content',
+        'nested/bruce-wayne/package/package.json': 'some content',
+        'wayne-foundation/batman/package/package.json': 'some content',
+      })
+
+      await expect(getPackagePaths({ filesystem: fs as never })).resolves.toEqual([
+        'libraries/wayne-manor',
+        'modules/wayne-tower',
+        'wayne-foundation/batman/package',
+      ])
+    })
+
+    it('should return paths for packages defined as yarn workspaces', async () => {
+      fs = createFsFromJSON({
+        'lerna.json': JSON.stringify({}),
+        'package.json': JSON.stringify({
+          workspaces: { packages: ['libraries/*', 'modules/*', 'wayne-foundation/batman'] },
+        }),
+        'libraries/wayne-manor/package.json': 'some content',
+        'modules/wayne-tower/package.json': 'some content',
+        'single/package/package.json': 'some content',
+        'nested/bruce-wayne/package/package.json': 'some content',
+        'wayne-foundation/batman/package/package.json': 'some content',
+      })
+
+      await expect(getPackagePaths({ filesystem: fs as never })).resolves.toEqual([
+        'libraries/wayne-manor',
+        'modules/wayne-tower',
+        'wayne-foundation/batman/package',
+      ])
+    })
   })
 
   describe('getPackagePathsByFolder', () => {
