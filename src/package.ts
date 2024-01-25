@@ -46,6 +46,7 @@ export async function getPackagePaths({ filesystem = fs }: DefaultParams = {}): 
   )
   return paths.flat()
 }
+
 export async function getPackagePathsByFolder({ filesystem = fs }: DefaultParams = {}): Promise<{
   [folder: string]: string
 }> {
