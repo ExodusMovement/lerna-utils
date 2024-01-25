@@ -4,9 +4,6 @@ module.exports = {
     {
       files: ['*.{ts,tsx}'],
       extends: '@exodus/eslint-config/typescript',
-      parserOptions: {
-        project: ['./tsconfig.json'],
-      },
       rules: {
         'import/no-extraneous-dependencies': [
           'error',
