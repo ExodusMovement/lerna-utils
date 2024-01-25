@@ -8,7 +8,7 @@
     "strict": true,
     "noEmit": true,
     "downlevelIteration": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }
