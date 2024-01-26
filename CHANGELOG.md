@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/ExodusMovement/lerna-utils/compare/v1.4.2...v1.5.0) (2024-01-26)
+
+
+### Features
+
+* fallback to npm/yarn workspaces ([#8](https://github.com/ExodusMovement/lerna-utils/issues/8)) ([b2e739d](https://github.com/ExodusMovement/lerna-utils/commit/b2e739d184069c41da0d39d46c68d5096b0bc0e9))
+
 ## [1.4.2](https://github.com/ExodusMovement/lerna-utils/compare/v1.4.1...v1.4.2) (2023-07-21)
 
 
