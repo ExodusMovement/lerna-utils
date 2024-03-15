@@ -25,9 +25,10 @@ export async function normalizePackages({
     if (trimmed === '') continue
 
     const folderName = path.basename(trimmed)
+
     const packagePath = byFolder[folderName]
 
-    if (!packagePath) {
+    if (!packagePath || !Object.prototype.hasOwnProperty.call(byFolder, folderName)) {
       invalid.push(trimmed)
       continue
     }
