@@ -4,6 +4,7 @@ import { readJson } from './utils/fs'
 import { LernaConfig, PackageJson } from './utils/types'
 import { filterAsync } from './utils/arrays'
 import { glob } from 'glob'
+import * as assert from 'node:assert'
 
 type DefaultParams = {
   filesystem?: typeof fs
@@ -71,6 +72,10 @@ export async function parsePackageFiles<T>(
   relativePath: string,
   { filesystem = fs }: DefaultParams = {}
 ): Promise<{ path: string; content: T }[]> {
+  const normalized = path.normalize(relativePath)
+  assert(!normalized.startsWith('..'), 'Found traversal characters in path')
+  assert(!normalized.startsWith('/'), 'Absolute paths are not permitted')
+
   const packagePaths = await getPackagePaths({ filesystem })
 
   return Promise.all(

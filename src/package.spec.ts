@@ -260,6 +260,30 @@ describe('package', () => {
         },
       ])
     })
+
+    it('should not allow path traversal with leading ../', async () => {
+      await expect(
+        parsePackageFiles<{ lines: { total: number } }>('../../secret/12w.json', {
+          filesystem: fs as never,
+        })
+      ).rejects.toThrow('Found traversal characters in path')
+    })
+
+    it('should not allow absolute paths', async () => {
+      await expect(
+        parsePackageFiles<{ lines: { total: number } }>('/secret/12w.json', {
+          filesystem: fs as never,
+        })
+      ).rejects.toThrow('Absolute paths are not permitted')
+    })
+
+    it('should not allow path traversal ', async () => {
+      await expect(
+        parsePackageFiles<{ lines: { total: number } }>('packages/../../12w.json', {
+          filesystem: fs as never,
+        })
+      ).rejects.toThrow('Found traversal characters in path')
+    })
   })
 
   describe('getPathsByPackageNames', () => {
