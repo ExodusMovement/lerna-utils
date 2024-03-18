@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/ExodusMovement/lerna-utils/compare/v1.5.0...v1.5.1) (2024-03-18)
+
+
+### Bug Fixes
+
+* prevent returning prototype functions ([#12](https://github.com/ExodusMovement/lerna-utils/issues/12)) ([6999949](https://github.com/ExodusMovement/lerna-utils/commit/6999949a82eab89db5c5609fc4ae41fb319db2ff))
+
 # [1.5.0](https://github.com/ExodusMovement/lerna-utils/compare/v1.4.2...v1.5.0) (2024-01-26)
 
 
