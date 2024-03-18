@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/ExodusMovement/lerna-utils/compare/v1.5.1...v1.5.2) (2024-03-18)
+
+
+### Bug Fixes
+
+* harden `readJson`  ([#11](https://github.com/ExodusMovement/lerna-utils/issues/11)) ([41ba829](https://github.com/ExodusMovement/lerna-utils/commit/41ba829cebf0b24082af648856c66007965cd2d7))
+
 ## [1.5.1](https://github.com/ExodusMovement/lerna-utils/compare/v1.5.0...v1.5.1) (2024-03-18)
 
 
