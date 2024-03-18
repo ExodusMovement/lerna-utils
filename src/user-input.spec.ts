@@ -102,6 +102,15 @@ describe('normalizePackages', () => {
     await expect(promise).rejects.toThrow()
   })
 
+  it('should throw when attempting prototype pollution', async () => {
+    const promise = normalizePackages({
+      packagesCsv: 'constructor',
+      filesystem: fs as never,
+    })
+
+    await expect(promise).rejects.toThrow()
+  })
+
   it('should throw for non existing package roots', async () => {
     const promise = normalizePackages({
       packagesCsv: 'packages/formatting,misc/test',
