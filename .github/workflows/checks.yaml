@@ -13,18 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: ExodusMovement/actions/setup/yarn-berry@65b395a82884455e8dc0cbc32355d8864f1ec30c
         with:
-          node-version-file: '.nvmrc'
-      - name: Allow read access to private registry
-        run: yarn config set --home 'npmRegistries["//registry.npmjs.org/"].npmAuthToken' "${{ secrets.NPM_TOKEN }}"
-      - name: Restore yarn cache
-        uses: actions/cache@v4
-        with:
-          path: .yarn/cache
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          npm-token: ${{ secrets.NPM_TOKEN }}
       - name: Install dependencies
         run: yarn install --immutable
       - name: Lint
@@ -37,18 +28,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: ExodusMovement/actions/setup/yarn-berry@65b395a82884455e8dc0cbc32355d8864f1ec30c
         with:
-          node-version-file: '.nvmrc'
-      - name: Allow read access to private registry
-        run: yarn config set --home 'npmRegistries["//registry.npmjs.org/"].npmAuthToken' "${{ secrets.NPM_TOKEN }}"
-      - name: Restore yarn cache
-        uses: actions/cache@v4
-        with:
-          path: .yarn/cache
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          npm-token: ${{ secrets.NPM_TOKEN }}
       - name: Install dependencies
         run: yarn install --immutable
       - name: Test
