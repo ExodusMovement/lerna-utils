@@ -6,26 +6,17 @@ on:
 
 jobs:
   publish:
+    environment: release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: ExodusMovement/actions/setup/yarn-berry@65b395a82884455e8dc0cbc32355d8864f1ec30c
         with:
-          node-version: 16
-          cache: 'yarn'
-      - name: Restore yarn cache
-        uses: actions/cache@v3
-        with:
-          path: .yarn/cache
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Allow access to private registry
-        run: yarn config set --home 'npmRegistries["//registry.npmjs.org/"].npmAuthToken' "${{ secrets.NPM_TOKEN }}"
+          npm-token: ${{ secrets.NPM_TOKEN }}
       - name: Install dependencies
         run: yarn install --immutable
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
         run: yarn semantic-release
