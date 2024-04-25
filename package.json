@@ -6,9 +6,6 @@
     "type": "git",
     "url": "https://github.com/ExodusMovement/lerna-utils.git"
   },
-  "publishConfig": {
-    "access": "restricted"
-  },
   "release": {
     "plugins": [
       "@semantic-release/commit-analyzer",
